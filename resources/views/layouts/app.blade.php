@@ -7,24 +7,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            min-height: 100vh;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
-            background: #f9fafc;
+            background: linear-gradient(135deg, #f9fafc 0%, #e0f7fa 100%);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
             color: #222;
         }
         .navbar {
             background: #fff;
-            border-bottom: 1.5px solid #e5e5e5;
-            box-shadow: 0 2px 12px rgba(44,62,80,0.07);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            box-shadow: 0 4px 24px rgba(44,62,80,0.10);
+            border-bottom: 2px solid #ffe5b4;
+            position: sticky; top: 0; z-index: 100;
         }
         .navbar-brand {
-            font-weight: 800;
-            font-size: 1.7rem;
-            letter-spacing: 1px;
-            color: #007aff !important;
+            font-family: 'Pacifico', cursive, system-ui;
+            font-size: 2rem;
+            color: #00bcd4 !important;
+            letter-spacing: 2px;
         }
         .navbar-nav .nav-link {
             color: #444 !important;
@@ -57,29 +54,29 @@
             font-size: 1rem;
         }
         h1, h2, h3, h4, h5, h6 {
-            font-family: inherit;
-            color: #007aff;
-            font-weight: 800;
+            font-weight: 900;
+            background: linear-gradient(90deg, #00bcd4 40%, #ff7f50 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .btn-primary, .btn-info {
-            background: #00bcd4;
-            border-color: #00bcd4;
+            background: linear-gradient(90deg, #00bcd4 60%, #ff7f50 100%);
+            border: none;
             color: #fff;
-            font-weight: 600;
-            border-radius: 0.5rem;
+            font-weight: 700;
+            border-radius: 0.7rem;
             box-shadow: 0 2px 8px rgba(0,188,212,0.07);
+            transition: background 0.2s;
         }
-        .btn-primary:hover, .btn-primary:focus, .btn-info:hover, .btn-info:focus {
-            background: #007aff;
-            border-color: #007aff;
-            color: #fff;
+        .btn-primary:hover, .btn-info:hover {
+            background: linear-gradient(90deg, #ff7f50 40%, #00bcd4 100%);
         }
         .btn-danger {
             background: #ff7f50;
             border-color: #ff7f50;
             color: #fff;
-            font-weight: 600;
-            border-radius: 0.5rem;
+            font-weight: 700;
+            border-radius: 0.7rem;
         }
         .btn-danger:hover, .btn-danger:focus {
             background: #d84315;
@@ -89,7 +86,7 @@
             background: #fff;
             color: #222;
             border: 1.5px solid #e5e5e5;
-            border-radius: 0.5rem;
+            border-radius: 0.7rem;
             font-family: inherit;
             font-size: 1.08rem;
             padding: 0.7rem 1rem;
@@ -101,13 +98,13 @@
             box-shadow: 0 0 0 0.2rem rgba(0,188,212,0.10);
         }
         .alert {
-            border-radius: 0.5rem;
+            border-radius: 0.7rem;
         }
         .section-box, .card, .bg-card {
             background: #fff;
             border: 2px solid #ffe5b4;
             border-radius: 1.5rem;
-            box-shadow: 0 4px 24px rgba(44,62,80,0.10);
+            box-shadow: 0 8px 32px rgba(0,188,212,0.10);
             padding: 2.5rem 2rem;
             margin-bottom: 2rem;
         }
@@ -126,11 +123,13 @@
             background: #007aff;
             color: #fff;
             font-size: 0.95em;
-            font-weight: 600;
+            font-weight: 700;
             border-radius: 0.4em;
         }
         .table thead {
-            background: #f5f5f5;
+            background: linear-gradient(90deg, #00bcd4 60%, #ffe5b4 100%);
+            color: #fff;
+            font-weight: 700;
         }
         .form-check-input:checked {
             background-color: #007aff;
@@ -145,8 +144,9 @@
             border-radius: 50%;
             background: #ffe5b4;
             color: #ff7f50;
-            font-weight: 700;
+            font-weight: 900;
             font-size: 1.1rem;
+            box-shadow: 0 2px 8px rgba(255,183,77,0.10);
         }
         .empty-illustration {
             max-width: 220px;
