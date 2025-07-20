@@ -132,7 +132,7 @@ MIT
 ## Assignment: Add a “Projects” Section
 
 You will add a new “Projects” section to this Laravel blog app, with full CRUD, role-based permissions, and navigation.  
-**You must update the seeder, permissions, migration, model, controller, Blade views, navigation, and routes.**
+**You must update the seeder, permissions, migration, model, controller, routes, and Blade views.**
 
 ---
 
@@ -245,7 +245,22 @@ class ProjectController extends Controller
 
 ---
 
-### 4. Create Blade Views
+### 4. Add Routes (Not Grouped)
+
+**In `routes/web.php`:**
+```php
+Route::get('projects', [ProjectController::class, 'index'])->name('projects.index');
+Route::get('projects/create', [ProjectController::class, 'create'])->name('projects.create');
+Route::post('projects', [ProjectController::class, 'store'])->name('projects.store');
+Route::get('projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+Route::get('projects/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+Route::post('projects/{project}/update', [ProjectController::class, 'update'])->name('projects.update');
+Route::delete('projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+```
+
+---
+
+### 5. Create Blade Views
 
 **Create these files in `resources/views/projects/`:**
 - `index.blade.php` (list)
@@ -303,30 +318,13 @@ class ProjectController extends Controller
 
 ---
 
-### 5. Update Navigation
+### 6. Update Navigation
 
 **In `resources/views/layouts/app.blade.php`:**
 ```blade
 @can('view-projects')
     <li class="nav-item"><a class="nav-link" href="{{ route('projects.index') }}">Projects</a></li>
 @endcan
-```
-
----
-
-### 6. Add Routes
-
-**In `routes/web.php`:**
-```php
-Route::middleware(['auth'])->group(function () {
-    Route::get('projects', [ProjectController::class, 'index'])->name('projects.index');
-    Route::get('projects/create', [ProjectController::class, 'create'])->name('projects.create');
-    Route::post('projects', [ProjectController::class, 'store'])->name('projects.store');
-    Route::get('projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
-    Route::get('projects/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
-    Route::post('projects/{project}/update', [ProjectController::class, 'update'])->name('projects.update');
-    Route::delete('projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
-});
 ```
 
 ---
