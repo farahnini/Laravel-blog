@@ -9,61 +9,33 @@
         body {
             min-height: 100vh;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
-            background: #fff;
+            background: #f9fafc;
             color: #222;
-        }
-        @media (prefers-color-scheme: dark) {
-            body, .bg-light {
-                background-color: #181a1b !important;
-                color: #f1f1f1 !important;
-            }
-            .navbar, .card, .modal-content, .dropdown-menu {
-                background-color: #23272b !important;
-                color: #f1f1f1 !important;
-            }
-            .btn-primary {
-                background-color: #2563eb;
-                border-color: #2563eb;
-            }
-            .btn-primary:hover {
-                background-color: #1d4ed8;
-                border-color: #1d4ed8;
-            }
-        }
-        body.dark-mode, .dark-mode .bg-light {
-            background-color: #181a1b !important;
-            color: #f1f1f1 !important;
-        }
-        .dark-mode .navbar, .dark-mode .card, .dark-mode .modal-content, .dark-mode .dropdown-menu {
-            background-color: #23272b !important;
-            color: #f1f1f1 !important;
-        }
-        .dark-mode .btn-primary {
-            background-color: #2563eb;
-            border-color: #2563eb;
-        }
-        .dark-mode .btn-primary:hover {
-            background-color: #1d4ed8;
-            border-color: #1d4ed8;
         }
         .navbar {
             background: #fff;
-            border-bottom: 1px solid #e5e5e5;
-            box-shadow: none;
+            border-bottom: 1.5px solid #e5e5e5;
+            box-shadow: 0 2px 12px rgba(44,62,80,0.07);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
+            font-weight: 800;
+            font-size: 1.7rem;
             letter-spacing: 1px;
-            color: #222 !important;
+            color: #007aff !important;
         }
         .navbar-nav .nav-link {
             color: #444 !important;
-            font-weight: 500;
+            font-weight: 600;
             margin-right: 1rem;
+            border-radius: 0.5rem;
+            transition: background 0.2s, color 0.2s;
         }
         .navbar-nav .nav-link.active, .navbar-nav .nav-link:focus, .navbar-nav .nav-link:hover {
-            color: #007aff !important;
+            color: #fff !important;
+            background: #007aff;
         }
         .dropdown-menu {
             border-radius: 0.5rem;
@@ -71,9 +43,9 @@
             box-shadow: 0 2px 8px rgba(44,62,80,0.07);
         }
         .main-content {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 2rem auto 0 auto;
-            padding: 0 1rem;
+            padding: 0 1.5rem;
         }
         .footer {
             background: #fff;
@@ -85,67 +57,76 @@
             font-size: 1rem;
         }
         h1, h2, h3, h4, h5, h6 {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
-            color: #222;
-            font-weight: 700;
+            font-family: inherit;
+            color: #007aff;
+            font-weight: 800;
         }
-        .btn-primary {
+        .btn-primary, .btn-info {
+            background: #00bcd4;
+            border-color: #00bcd4;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,188,212,0.07);
+        }
+        .btn-primary:hover, .btn-primary:focus, .btn-info:hover, .btn-info:focus {
             background: #007aff;
             border-color: #007aff;
-        }
-        .btn-primary:hover, .btn-primary:focus {
-            background: #0056b3;
-            border-color: #0056b3;
-        }
-        .btn-info {
-            background: #f5f5f5;
-            color: #222;
-            border: 1px solid #e5e5e5;
-        }
-        .btn-info:hover, .btn-info:focus {
-            background: #e5e5e5;
-            color: #222;
-        }
-        .btn-danger {
-            background: #222;
-            border-color: #222;
             color: #fff;
         }
-        .btn-danger:hover, .btn-danger:focus {
-            background: #444;
-            border-color: #444;
+        .btn-danger {
+            background: #ff7f50;
+            border-color: #ff7f50;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 0.5rem;
         }
-        .blog-input, .form-control, .form-select {
+        .btn-danger:hover, .btn-danger:focus {
+            background: #d84315;
+            border-color: #d84315;
+        }
+        .form-control, .form-select {
             background: #fff;
             color: #222;
-            border: 1px solid #e5e5e5;
+            border: 1.5px solid #e5e5e5;
             border-radius: 0.5rem;
             font-family: inherit;
+            font-size: 1.08rem;
+            padding: 0.7rem 1rem;
         }
-        .blog-input:focus, .form-control:focus, .form-select:focus {
-            border-color: #007aff;
+        .form-control:focus, .form-select:focus {
+            border-color: #00bcd4;
             background: #fff;
             color: #222;
+            box-shadow: 0 0 0 0.2rem rgba(0,188,212,0.10);
         }
         .alert {
             border-radius: 0.5rem;
         }
-        .section-box {
+        .section-box, .card, .bg-card {
             background: #fff;
-            border: 1px solid #e5e5e5;
-            border-radius: 1rem;
-            box-shadow: none;
-            padding: 2rem;
+            border: 2px solid #ffe5b4;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 24px rgba(44,62,80,0.10);
+            padding: 2.5rem 2rem;
             margin-bottom: 2rem;
         }
         .table th, .table td {
             vertical-align: middle;
         }
+        .table {
+            background: #fff;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        .table-striped > tbody > tr:nth-of-type(odd) {
+            background-color: #f9fafc;
+        }
         .badge {
-            background: #222;
+            background: #007aff;
             color: #fff;
             font-size: 0.95em;
-            font-weight: 500;
+            font-weight: 600;
             border-radius: 0.4em;
         }
         .table thead {
@@ -154,6 +135,22 @@
         .form-check-input:checked {
             background-color: #007aff;
             border-color: #007aff;
+        }
+        .avatar-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #ffe5b4;
+            color: #ff7f50;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .empty-illustration {
+            max-width: 220px;
+            margin-bottom: 1.5rem;
         }
     </style>
     <script>
@@ -194,7 +191,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                <li class="nav-item"><a class="nav-link" href="{{ route('articles.index') }}">Articles</a></li>
+                {{-- <li class="nav-item"><a class="nav-link" href="{{ route('articles.index') }}">Articles</a></li> --}}
                 @can('view-users')
                     <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
                 @endcan
@@ -220,11 +217,11 @@
                 @endauth
                 @guest
                 <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
-                @endguest
-                <button id="darkModeToggle" class="btn btn-outline-secondary ms-2" type="button" aria-label="Toggle dark mode">
+{{-- <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li> --}}
+@endguest
+                {{-- <button id="darkModeToggle" class="btn btn-outline-secondary ms-2" type="button" aria-label="Toggle dark mode">
                     <span id="darkModeIcon" class="bi bi-moon"></span>
-                </button>
+                </button> --}}
             </ul>
         </div>
     </div>
