@@ -1,203 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[![GitHub](https://img.shields.io/badge/GitHub-Project-blue?logo=github)](https://github.com/farahnini/Laravel-blog)
 
 # Laravel Blog with Spatie Roles & Permissions
 
-A modern, feature-rich Laravel blog application with:
+A modern, feature-rich Laravel blog with:
 - Spatie roles & permissions (admin, editor, reader)
-- Article CRUD with WYSIWYG editor
-- Like/dislike (rating) system
-- Reader comments (with edit/delete permissions)
-- User and role management (permission-based)
-- Clean, responsive UI (Bootstrap 5, iOS-style fonts)
-- Realistic demo data and images
+- Article CRUD, WYSIWYG editor, like/dislike, comments
+- User & role management (permission-based)
+- Clean Bootstrap 5 UI, iOS-style fonts
+- Realistic demo data
 
 ---
 
 ## Features
-
-### 1. Authentication
-- Laravel built-in authentication (register, login, logout)
-- Only authenticated users can create/edit articles or comment
-
-### 2. Roles & Permissions (Spatie)
-- **Admin**: Full access to all features, can manage users/roles, edit/delete any article or comment
-- **Editor**: Can create, edit, and delete their own articles; can comment and edit/delete their own comments
-- **Reader**: Can view articles and post/edit/delete their own comments
-- **Permissions** are assigned to roles and can also be granted directly to users.
-
-#### Permissions List
-- **Articles:**
-  - create-articles, edit-articles, delete-articles, view-articles
-- **Users:**
-  - create-users, edit-users, delete-users, view-users
-- **Roles:**
-  - create-roles, edit-roles, delete-roles, view-roles
-
-### 3. Article Management
-- **Create, edit, delete, view articles**
-- Editors can only edit/delete their own articles; admins can manage all
-- Articles use a WYSIWYG editor (Quill.js) for rich content (headings, images, lists, links)
-- Articles display a curated Unsplash banner image
-- Article index shows title, excerpt, author, date, and reactions
-- Pagination (6 per page, Bootstrap 5 style)
-
-### 4. Like/Dislike (Rating) System
-- Users can like or dislike each article (one reaction per user per article)
-- Like/dislike counts shown on index and show pages
-- User’s own reaction is highlighted
-
-### 5. Comments
-- Authenticated users can comment on articles
-- Users can edit/delete their own comments
-- Admins can delete any comment, but can only edit their own
-- Comments show user, content, created time (date and "time ago")
-
-### 6. User & Role Management (Permission-Based)
-- Navigation bar shows **Users** and **Roles** links only if you have `view-users` or `view-roles` permission
-- User management actions (view, create, edit) require the corresponding permission (`view-users`, `create-users`, `edit-users`)
-- Role management actions (view, create, edit, delete) require the corresponding permission (`view-roles`, `create-roles`, `edit-roles`, `delete-roles`)
-- Assign multiple roles to users from the user edit page
-- Assign permissions to roles from the role edit page (permissions are grouped by resource)
-- Assign users to a role directly from the role edit page
-- Permissions can be granted directly to users as well as via roles
-
-### 7. UI/UX
-- Clean, modern, mobile-friendly design (Bootstrap 5, iOS-style font)
-- Banner images for articles (curated Unsplash set)
-- User avatars (initials in a circle)
-- Friendly illustrations for empty states
-- All actions use GET/POST/DELETE (no PUT)
-- Timezone set to Asia/Kuala_Lumpur
-- Pagination and dates are Bootstrap and Carbon-powered
+- **Authentication:** Register, login, logout (Laravel built-in)
+- **Roles & Permissions:**
+  - Admin: Full access
+  - Editor: Manage own articles, comment
+  - Reader: View articles, comment
+  - Permissions: create/edit/delete/view for articles, users, roles
+  - Permissions can be assigned to roles or directly to users
+- **Articles:** CRUD, WYSIWYG, Unsplash banners, reactions, pagination
+- **Comments:** Edit/delete own, admin can delete any
+- **User/Role Management:**
+  - Navigation and actions are permission-based
+  - Assign users to roles, assign permissions to roles (grouped by resource)
+  - Assign users to roles from the role edit page
+- **UI/UX:** Clean, mobile-friendly, empty state illustrations, avatars
+- **Timezone:** Asia/Kuala_Lumpur
 
 ---
 
 ## Setup
-
-1. **Clone the repo and install dependencies:**
+1. Clone & install:
    ```bash
-   git clone ...
-   cd your-project
+   git clone https://github.com/farahnini/Laravel-blog.git
+   cd Laravel-blog
    composer install
-   npm install && npm run build # if using Laravel Mix/Vite
+   npm install && npm run build
    cp .env.example .env
    php artisan key:generate
    ```
-2. **Set up your database in `.env`**
-3. **Set timezone in `.env` (optional, default is Asia/Kuala_Lumpur):**
-   ```
-   APP_TIMEZONE=Asia/Kuala_Lumpur
-   ```
-4. **Run migrations and seeders:**
+2. Set up your database in `.env`
+3. (Optional) Set timezone in `.env`:
+   `APP_TIMEZONE=Asia/Kuala_Lumpur`
+4. Run migrations & seeders:
    ```bash
    php artisan migrate --force
    php artisan db:seed --force
    ```
-5. **Login with demo users:**
-   - **Editor:** editor@example.com / password
+5. Login with demo users:
    - **Admin:** admin@example.com / password
+   - **Editor:** editor@example.com / password
    - **Reader:** reader@example.com / password
 
 ---
 
 ## Usage
-
-- **Articles:** Editors can create, edit, and delete their own articles. Admins can manage all articles.
-- **Reactions:** All users can like/dislike each article (one reaction per article).
-- **Comments:** All users can comment. Users can edit/delete their own comments. Admins can delete any comment.
+- **Articles:** Editors manage their own; admins manage all
+- **Reactions:** One like/dislike per user per article
+- **Comments:** Users edit/delete own; admins delete any
 - **User/Role Management:**
-  - Navigation and actions are permission-based (not just role-based)
-  - Only users with the right permissions see management links and buttons
-  - Assign users to roles and assign permissions to roles from the role edit page
-  - Permissions are grouped by resource for clarity
-  - Permissions can be granted directly to users as well as via roles
-- **WYSIWYG Editor:** Rich text, images, and formatting supported in articles.
-- **Pagination:** Article index paginated, styled with Bootstrap.
-- **Timezone:** All dates/times use Asia/Kuala_Lumpur.
-
----
-
-## Customization
-- **Banner Images:** Change the curated Unsplash URLs in `articles/show.blade.php` for your own style.
-- **Roles/Permissions:** Add or remove roles/permissions in the seeders as needed.
-- **UI:** Tweak Bootstrap classes or add your own CSS in `layouts/app.blade.php`.
+  - Links/buttons shown only if you have permission
+  - Assign users to roles, assign permissions to roles (grouped)
+  - Permissions can be granted directly to users
+- **WYSIWYG:** Rich text, images, formatting
+- **Pagination:** Bootstrap-styled
 
 ---
 
 ## Demo Users & Roles
-- **Admin User:** Full permissions, can manage everything
-- **Editor User:** Can manage their own articles, comment, and (optionally) has direct permissions if assigned
-- **Reader User:** Can view articles, comment, and (optionally) has direct permissions if assigned
+| Name         | Email                | Password  | Role   |
+|--------------|----------------------|-----------|--------|
+| Admin User   | admin@example.com    | password  | admin  |
+| Editor User  | editor@example.com   | password  | editor |
+| Reader User  | reader@example.com   | password  | reader |
 
 ---
 
 ## Database Tables
-
 | Table                  | Description                                 |
 |------------------------|---------------------------------------------|
 | users                  | User accounts                               |
@@ -213,7 +93,6 @@ A modern, feature-rich Laravel blog application with:
 ---
 
 ## Blade Views
-
 **Articles:**
 - `articles/index.blade.php` — Article list
 - `articles/show.blade.php` — Article details
@@ -242,15 +121,6 @@ A modern, feature-rich Laravel blog application with:
 **Layout & Errors:**
 - `layouts/app.blade.php` — Main layout
 - `errors/403.blade.php` — Custom 403 Forbidden page
-
----
-
-## Credits
-- [Laravel](https://laravel.com/)
-- [Spatie Laravel Permission](https://spatie.be/docs/laravel-permission)
-- [Bootstrap 5](https://getbootstrap.com/)
-- [Quill.js](https://quilljs.com/)
-- [Unsplash](https://unsplash.com/) for demo images
 
 ---
 

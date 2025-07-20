@@ -17,19 +17,30 @@
             </div>
             <div class="mb-4">
                 <label class="form-label">Roles</label>
-                <select name="roles[]" class="form-select" multiple>
+                <div class="row">
                     @foreach($roles as $role)
-                        <option value="{{ $role->name }}" {{ $user->roles->pluck('name')->contains($role->name) ? 'selected' : '' }}>{{ $role->name }}</option>
+                        <div class="col-md-6 mb-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->name }}" id="role_{{ $role->id }}" {{ $user->roles->pluck('name')->contains($role->name) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="role_{{ $role->id }}">{{ ucfirst($role->name) }}</label>
+                            </div>
+                            @php
+                                $perms = $role->permissions->pluck('name');
+                                $grouped = collect($perms)->groupBy(function($perm) { return Str::after($perm, '-'); });
+                            @endphp
+                            @if($grouped->count())
+                                <div class="small text-muted ms-4">
+                                    <strong>Permissions:</strong>
+                                    <ul class="mb-1">
+                                        @foreach($grouped as $group => $actions)
+                                            <li>{{ ucfirst($group) }}: {{ $actions->map(fn($p) => Str::before($p, '-'))->unique()->implode(', ') }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
                     @endforeach
-                </select>
-            </div>
-            <div class="mb-4">
-                <label class="form-label">Permissions</label>
-                <select name="permissions[]" class="form-select" multiple>
-                    @foreach($permissions as $permission)
-                        <option value="{{ $permission->name }}" {{ $user->permissions->pluck('name')->contains($permission->name) ? 'selected' : '' }}>{{ $permission->name }}</option>
-                    @endforeach
-                </select>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary w-100">Update</button>
         </form>
