@@ -154,6 +154,20 @@ This assignment guides you to add a new "Projects" section to the Laravel blog a
   php artisan make:model Project -m
   ```
 - Migration fields: `id`, `title`, `description`, `user_id`, `timestamps`.
+- Example migration:
+  ```php
+  // database/migrations/xxxx_xx_xx_create_projects_table.php
+  public function up()
+  {
+      Schema::create('projects', function (Blueprint $table) {
+          $table->id();
+          $table->string('title');
+          $table->text('description');
+          $table->foreignId('user_id')->constrained()->onDelete('cascade');
+          $table->timestamps();
+      });
+  }
+  ```
 - Model:
   ```php
   class Project extends Model {
