@@ -1,38 +1,84 @@
 @extends('layouts.app')
+
 @section('content')
-    <section class="section-box" style="max-width: 600px; margin:auto;">
-        <div class="mb-4 text-center">
-            <h2 class="mb-2" style="font-weight:600; color:#222;">Edit Role</h2>
-            <a href="{{ route('roles.index') }}" class="btn btn-info btn-sm">Back</a>
-        </div>
-        <form method="POST" action="{{ route('roles.update', $role) }}">
-                @csrf
-                <div class="mb-4">
-                    <label class="form-label">Name</label>
-                    <input type="text" name="name" class="form-control" value="{{ old('name', $role->name) }}" required autofocus>
-                </div>
-                <div class="mb-4">
-                    <label class="form-label">Permissions</label>
-                    @php
-                        $grouped = collect($permissions)->groupBy(function($perm) {
-                            return Str::after($perm->name, '-');
-                        });
-                    @endphp
-                    <div class="row">
-                        @foreach($grouped as $group => $perms)
-                            <div class="col-md-6 mb-3">
-                                <div class="fw-semibold mb-2" style="color:#ff7f50;">{{ ucfirst($group) }}</div>
-                                @foreach($perms as $perm)
-                                    <div class="form-check mb-1">
-                                        <input class="form-check-input" type="checkbox" name="permissions[]" value="{{ $perm->name }}" id="perm_{{ $perm->id }}" {{ $role->permissions->pluck('name')->contains($perm->name) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="perm_{{ $perm->id }}">{{ Str::before($perm->name, '-') }}</label>
-                                    </div>
-                                @endforeach
+<div class="main-content">
+    <!-- Hero Section -->
+    <div class="section-box text-center mb-5">
+        <h1 class="display-4 mb-3">✏️ Edit Role</h1>
+        <p class="lead text-muted">Update role permissions and settings</p>
+    </div>
+
+    <!-- Role Form -->
+    <div class="section-box">
+        <form action="{{ route('roles.update', $role) }}" method="POST">
+            @csrf
+            @method('POST')
+            
+            <div class="mb-4">
+                <label for="name" class="form-label fw-bold">
+                    <i class="fas fa-tag me-2"></i>Role Name
+                </label>
+                <input type="text" name="name" id="name" class="form-control form-control-lg" 
+                       value="{{ old('name', $role->name) }}" placeholder="Enter role name..." required>
+                @error('name')
+                    <div class="text-danger mt-2">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Permissions Section -->
+            <div class="mb-4">
+                <label class="form-label fw-bold">
+                    <i class="fas fa-shield-alt me-2"></i>Assign Permissions
+                </label>
+                
+                @php
+                    $permissions = $permissions->groupBy(function($permission) {
+                        return explode(' ', $permission->name)[1] ?? 'other';
+                    });
+                @endphp
+                
+                @foreach($permissions as $resource => $perms)
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0 fw-bold">
+                            <i class="fas fa-folder me-2"></i>{{ ucfirst($resource) }} Permissions
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach($perms as $permission)
+                            <div class="col-md-3 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions[]" 
+                                           value="{{ $permission->id }}" id="perm_{{ $permission->id }}"
+                                           {{ in_array($permission->id, old('permissions', $role->permissions->pluck('id')->toArray())) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="perm_{{ $permission->id }}">
+                                        <strong>{{ ucfirst(explode(' ', $permission->name)[0]) }}</strong>
+                                        <br>
+                                        <small class="text-muted">{{ $permission->name }}</small>
+                                    </label>
+                                </div>
                             </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Update</button>
-            </form>
-    </section>
+                @endforeach
+                
+                @error('permissions')
+                    <div class="text-danger mt-2">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="d-flex gap-3">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-save me-2"></i>Update Role
+                </button>
+                <a href="{{ route('roles.index') }}" class="btn btn-outline-secondary btn-lg">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection 

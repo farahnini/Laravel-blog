@@ -1,99 +1,151 @@
 @extends('layouts.app')
+
 @section('content')
-    @php
-        $banners = [
-            'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80',
-            'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=900&q=80',
-            'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=900&q=80',
-            'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=900&q=80',
-        ];
-        $banner = $banners[$article->id % count($banners)];
-    @endphp
-    <div class="mb-4" style="border-radius:1rem; overflow:hidden;">
-        <img src="{{ $banner }}" alt="Article Banner" style="width:100%; max-height:260px; object-fit:cover;">
-    </div>
-    <section class="section-box" style="max-width: 700px; margin:auto;">
-        <div class="mb-4 text-center">
-            <div class="d-flex justify-content-center align-items-center gap-3 mb-3">
-                <form method="POST" action="{{ route('articles.like', $article) }}" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-sm {{ $article->userReaction(auth()->user()) === 'like' ? 'btn-primary' : 'btn-info' }}" style="min-width:60px;">👍 {{ $article->likeCount() }}</button>
-                </form>
-                <form method="POST" action="{{ route('articles.dislike', $article) }}" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-sm {{ $article->userReaction(auth()->user()) === 'dislike' ? 'btn-danger' : 'btn-info' }}" style="min-width:60px;">👎 {{ $article->dislikeCount() }}</button>
-                </form>
-            </div>
-            <h2 class="mb-2" style="font-weight:600; color:#222;">{{ $article->title }}</h2>
-            <div class="d-flex justify-content-center align-items-center gap-2 text-muted small mb-2">
-                <span class="avatar-circle">{{ strtoupper(substr($article->user->name ?? 'U', 0, 1)) }}</span>
-                <span>{{ $article->user->name ?? 'N/A' }}</span>
-            </div>
-            <div class="text-muted small mb-2">
-                Created: {{ $article->created_at->format('M d, Y H:i') }} <span title="{{ $article->created_at }}">({{ $article->created_at->diffForHumans() }})</span><br>
-                Updated: {{ $article->updated_at->format('M d, Y H:i') }} <span title="{{ $article->updated_at }}">({{ $article->updated_at->diffForHumans() }})</span>
-            </div>
-            <a href="{{ route('articles.index') }}" class="btn btn-info btn-sm">Back</a>
-        </div>
-        <div class="mb-4" style="font-size:1.15rem; line-height:1.7; color:#222;">{!! $article->content !!}</div>
-        <div class="d-flex gap-2 mb-4">
-            @if(auth()->check() && (auth()->id() === $article->user_id))
-                <a href="{{ route('articles.edit', $article) }}" class="btn btn-info btn-sm">Edit</a>
-                <form action="{{ route('articles.destroy', $article) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this article?');">
-                    @csrf @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                </form>
-            @endif
-        </div>
-        <hr>
-        <div class="mb-3"><strong>Comments</strong></div>
-        @auth
-        <form method="POST" action="{{ route('articles.comments.store', $article) }}" class="mb-4">
-            @csrf
-            <div class="mb-2">
-                <textarea name="content" class="form-control blog-input" rows="3" required placeholder="Add a comment..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary btn-sm">Post Comment</button>
-        </form>
-        @endauth
-        @if($article->comments->count())
-            <div class="mt-3">
-                @foreach($article->comments->sortByDesc('created_at') as $comment)
-                    <div class="mb-3 p-2" style="background:#f8f8f8; border-radius:0.5rem;">
-                        <div class="d-flex align-items-center gap-2 mb-1">
-                            <span class="avatar-circle" style="width:24px;height:24px;font-size:0.95rem;">{{ strtoupper(substr($comment->user->name ?? 'U', 0, 1)) }}</span>
-                            <span class="fw-semibold">{{ $comment->user->name ?? 'N/A' }}</span>
-                            <span class="text-muted small ms-2">{{ $comment->created_at->format('M d, Y H:i') }} ({{ $comment->created_at->diffForHumans() }})</span>
-                            @if(auth()->check() && auth()->id() === $comment->user_id)
-                                <a href="{{ route('articles.comments.edit', [$article, $comment]) }}" class="btn btn-info btn-sm ms-2" style="padding:2px 10px;font-size:0.85em;">Edit</a>
-                            @endif
-                            @if(auth()->check() && (auth()->id() === $comment->user_id || auth()->user()->hasRole('admin')))
-                                <form method="POST" action="{{ route('articles.comments.delete', [$article, $comment]) }}" class="ms-1 d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm" style="padding:2px 10px;font-size:0.85em;">Delete</button>
-                                </form>
-                            @endif
-                        </div>
-                        <div style="margin-left:2.2rem;">{!! nl2br(e($comment->content)) !!}</div>
+<div class="main-content">
+    <!-- Article Hero -->
+    <div class="section-box compact-section">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h1 class="display-6 mb-2">{{ $article->title }}</h1>
+                <div class="d-flex align-items-center mb-2">
+                    <div class="avatar-circle me-2">
+                        {{ strtoupper(substr($article->user->name, 0, 1)) }}
                     </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold">{{ $article->user->name }}</h6>
+                        <small class="text-muted">
+                            <i class="fas fa-calendar me-1"></i>Created {{ $article->created_at->diffForHumans() }}
+                            @if($article->updated_at != $article->created_at)
+                                <br><i class="fas fa-edit me-1"></i>Updated {{ $article->updated_at->diffForHumans() }}
+                            @endif
+                        </small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex gap-2">
+                @can('update', $article)
+                <a href="{{ route('articles.edit', $article) }}" class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-edit me-1"></i>Edit
+                </a>
+                @endcan
+                @can('delete', $article)
+                <form action="{{ route('articles.destroy', $article) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')">
+                        <i class="fas fa-trash me-1"></i>Delete
+                    </button>
+                </form>
+                @endcan
+            </div>
+        </div>
+
+        <!-- Article Content -->
+        <div class="article-content mb-3">
+            {!! $article->content !!}
+        </div>
+
+        <!-- Reactions -->
+        <div class="d-flex align-items-center justify-content-between border-top pt-3">
+            <div class="d-flex align-items-center gap-3">
+                <form action="{{ route('articles.like', $article) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-thumbs-up me-1"></i>
+                        {{ $article->reactions()->where('type', 'like')->count() }}
+                    </button>
+                </form>
+                
+                <form action="{{ route('articles.dislike', $article) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-thumbs-down me-1"></i>
+                        {{ $article->reactions()->where('type', 'dislike')->count() }}
+                    </button>
+                </form>
+            </div>
+            
+            <a href="#comments" class="btn btn-outline-info btn-sm">
+                <i class="fas fa-comments me-1"></i>
+                {{ $article->comments()->count() }} Comments
+            </a>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div id="comments" class="section-box compact-section">
+        <h3 class="mb-3">
+            <i class="fas fa-comments me-2"></i>Comments
+        </h3>
+
+        <!-- Add Comment -->
+        @auth
+        <div class="mb-3">
+            <form action="{{ route('articles.comments.store', $article) }}" method="POST">
+                @csrf
+                <div class="mb-2">
+                    <label for="content" class="form-label fw-bold">Add a comment</label>
+                    <textarea name="content" id="content" rows="2" class="form-control" 
+                              placeholder="Share your thoughts..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-paper-plane me-1"></i>Post Comment
+                </button>
+            </form>
+        </div>
+        @endauth
+
+        <!-- Comments List -->
+        @if($article->comments->count() > 0)
+            <div class="comments-list">
+                @foreach($article->comments as $comment)
+                <div class="comment-item border-bottom pb-2 mb-2">
+                    <div class="d-flex align-items-start">
+                        <div class="avatar-circle me-2 mt-1">
+                            {{ strtoupper(substr($comment->user->name, 0, 1)) }}
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <div>
+                                    <h6 class="mb-0 fw-bold">{{ $comment->user->name }}</h6>
+                                    <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
+                                </div>
+                                <div class="btn-group btn-group-sm">
+                                    @can('update', $comment)
+                                    <a href="{{ route('articles.comments.edit', [$article, $comment]) }}" class="btn btn-outline-secondary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    @endcan
+                                    @can('delete', $comment)
+                                    <form action="{{ route('articles.comments.delete', [$article, $comment]) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Delete this comment?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                    @endcan
+                                </div>
+                            </div>
+                            <p class="mb-0">{{ $comment->content }}</p>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
             </div>
         @else
-            <div class="text-muted">No comments yet.</div>
+            <div class="text-center py-3">
+                <i class="fas fa-comments fa-2x text-muted mb-2"></i>
+                <p class="text-muted mb-0">No comments yet. Be the first to share your thoughts!</p>
+            </div>
         @endif
-    </section>
-    <style>
-        .avatar-circle {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #f5f5f5;
-            color: #222;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-    </style>
+    </div>
+
+    <!-- Back to Articles -->
+    <div class="text-center">
+        <a href="{{ route('articles.index') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i>Back to Articles
+        </a>
+    </div>
+</div>
 @endsection 

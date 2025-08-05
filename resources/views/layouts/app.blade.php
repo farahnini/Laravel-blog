@@ -41,15 +41,16 @@
         }
         .main-content {
             max-width: 1000px;
-            margin: 2rem auto 0 auto;
+            margin: 1rem auto 0 auto;
             padding: 0 1.5rem;
+            min-height: calc(100vh - 200px);
         }
         .footer {
             background: #fff;
             color: #888;
-            padding: 2rem 0 1rem 0;
+            padding: 1.5rem 0 1rem 0;
             text-align: center;
-            margin-top: 3rem;
+            margin-top: 2rem;
             border-top: 1px solid #e5e5e5;
             font-size: 1rem;
         }
@@ -58,6 +59,7 @@
             background: linear-gradient(90deg, #00bcd4 40%, #ff7f50 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 0.75rem;
         }
         .btn-primary, .btn-info {
             background: linear-gradient(90deg, #00bcd4 60%, #ff7f50 100%);
@@ -67,6 +69,7 @@
             border-radius: 0.7rem;
             box-shadow: 0 2px 8px rgba(0,188,212,0.07);
             transition: background 0.2s;
+            padding: 0.6rem 1.2rem;
         }
         .btn-primary:hover, .btn-info:hover {
             background: linear-gradient(90deg, #ff7f50 40%, #00bcd4 100%);
@@ -77,6 +80,7 @@
             color: #fff;
             font-weight: 700;
             border-radius: 0.7rem;
+            padding: 0.6rem 1.2rem;
         }
         .btn-danger:hover, .btn-danger:focus {
             background: #d84315;
@@ -88,8 +92,8 @@
             border: 1.5px solid #e5e5e5;
             border-radius: 0.7rem;
             font-family: inherit;
-            font-size: 1.08rem;
-            padding: 0.7rem 1rem;
+            font-size: 1rem;
+            padding: 0.6rem 1rem;
         }
         .form-control:focus, .form-select:focus {
             border-color: #00bcd4;
@@ -99,22 +103,36 @@
         }
         .alert {
             border-radius: 0.7rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
         }
         .section-box, .card, .bg-card {
             background: #fff;
             border: 2px solid #ffe5b4;
             border-radius: 1.5rem;
             box-shadow: 0 8px 32px rgba(0,188,212,0.10);
-            padding: 2.5rem 2rem;
+            padding: 2rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .hero-section {
+            padding: 1.5rem 2rem;
             margin-bottom: 2rem;
+        }
+        .hero-section h1 {
+            margin-bottom: 0.5rem;
+        }
+        .hero-section p {
+            margin-bottom: 1rem;
         }
         .table th, .table td {
             vertical-align: middle;
+            padding: 0.75rem 1rem;
         }
         .table {
             background: #fff;
             border-radius: 1rem;
             overflow: hidden;
+            margin-bottom: 0;
         }
         .table-striped > tbody > tr:nth-of-type(odd) {
             background-color: #f9fafc;
@@ -122,9 +140,10 @@
         .badge {
             background: #007aff;
             color: #fff;
-            font-size: 0.95em;
+            font-size: 0.9em;
             font-weight: 700;
             border-radius: 0.4em;
+            padding: 0.4em 0.7em;
         }
         .table thead {
             background: linear-gradient(90deg, #00bcd4 60%, #ffe5b4 100%);
@@ -145,12 +164,32 @@
             background: #ffe5b4;
             color: #ff7f50;
             font-weight: 900;
-            font-size: 1.1rem;
+            font-size: 1rem;
             box-shadow: 0 2px 8px rgba(255,183,77,0.10);
         }
         .empty-illustration {
-            max-width: 220px;
+            max-width: 200px;
+            margin-bottom: 1rem;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
             margin-bottom: 1.5rem;
+        }
+        .compact-section {
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .navbar {
+            padding: 0.75rem 1rem;
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+        }
+        .navbar-nav .nav-link {
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
         }
     </style>
     <script>

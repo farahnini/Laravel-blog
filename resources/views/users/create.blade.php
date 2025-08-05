@@ -1,56 +1,114 @@
 @extends('layouts.app')
+
 @section('content')
-    <section class="section-box bg-body rounded shadow-sm" style="max-width: 600px; margin:auto;">
-        <div class="mb-4 text-center">
-            <h2 class="mb-2 fw-semibold text-body">Create User</h2>
-            <a href="{{ route('users.index') }}" class="btn btn-info btn-sm">Back</a>
-        </div>
-        <form method="POST" action="{{ route('users.store') }}">
+<div class="main-content">
+    <!-- Hero Section -->
+    <div class="section-box text-center mb-5">
+        <h1 class="display-4 mb-3">👤 Add New User</h1>
+        <p class="lead text-muted">Create a new user account and assign appropriate roles</p>
+    </div>
+
+    <!-- User Form -->
+    <div class="section-box">
+        <form action="{{ route('users.store') }}" method="POST">
             @csrf
-            <div class="mb-4">
-                <label class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" value="{{ old('name') }}" required autofocus>
-            </div>
-            <div class="mb-4">
-                <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
-            </div>
-            <div class="mb-4">
-                <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" required>
-            </div>
-            <div class="mb-4">
-                <label class="form-label">Confirm Password</label>
-                <input type="password" name="password_confirmation" class="form-control" required>
-            </div>
-            <div class="mb-4">
-                <label class="form-label">Roles</label>
-                <div class="row">
-                    @foreach($roles as $role)
-                        <div class="col-md-6 mb-2">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->name }}" id="role_{{ $role->id }}">
-                                <label class="form-check-label" for="role_{{ $role->id }}">{{ ucfirst($role->name) }}</label>
-                            </div>
-                            @php
-                                $perms = $role->permissions->pluck('name');
-                                $grouped = collect($perms)->groupBy(function($perm) { return Str::after($perm, '-'); });
-                            @endphp
-                            @if($grouped->count())
-                                <div class="small text-muted ms-4">
-                                    <strong>Permissions:</strong>
-                                    <ul class="mb-1">
-                                        @foreach($grouped as $group => $actions)
-                                            <li>{{ ucfirst($group) }}: {{ $actions->map(fn($p) => Str::before($p, '-'))->unique()->implode(', ') }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        </div>
-                    @endforeach
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="name" class="form-label fw-bold">
+                            <i class="fas fa-user me-2"></i>Full Name
+                        </label>
+                        <input type="text" name="name" id="name" class="form-control form-control-lg" 
+                               value="{{ old('name') }}" placeholder="Enter full name..." required>
+                        @error('name')
+                            <div class="text-danger mt-2">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="email" class="form-label fw-bold">
+                            <i class="fas fa-envelope me-2"></i>Email Address
+                        </label>
+                        <input type="email" name="email" id="email" class="form-control form-control-lg" 
+                               value="{{ old('email') }}" placeholder="Enter email address..." required>
+                        @error('email')
+                            <div class="text-danger mt-2">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Create</button>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-bold">
+                            <i class="fas fa-lock me-2"></i>Password
+                        </label>
+                        <input type="password" name="password" id="password" class="form-control form-control-lg" 
+                               placeholder="Enter password..." required>
+                        @error('password')
+                            <div class="text-danger mt-2">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="password_confirmation" class="form-label fw-bold">
+                            <i class="fas fa-lock me-2"></i>Confirm Password
+                        </label>
+                        <input type="password" name="password_confirmation" id="password_confirmation" 
+                               class="form-control form-control-lg" placeholder="Confirm password..." required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Roles Section -->
+            <div class="mb-4">
+                <label class="form-label fw-bold">
+                    <i class="fas fa-users-cog me-2"></i>Assign Roles
+                </label>
+                <div class="row">
+                    @foreach($roles as $role)
+                    <div class="col-md-4 mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="roles[]" 
+                                   value="{{ $role->id }}" id="role_{{ $role->id }}"
+                                   {{ in_array($role->id, old('roles', [])) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="role_{{ $role->id }}">
+                                <strong>{{ ucfirst($role->name) }}</strong>
+                                <br>
+                                <small class="text-muted">
+                                    @if($role->name === 'admin')
+                                        Full access to all features
+                                    @elseif($role->name === 'editor')
+                                        Can create and edit articles
+                                    @elseif($role->name === 'reader')
+                                        Can view articles and comment
+                                    @endif
+                                </small>
+                            </label>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @error('roles')
+                    <div class="text-danger mt-2">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="d-flex gap-3">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-user-plus me-2"></i>Create User
+                </button>
+                <a href="{{ route('users.index') }}" class="btn btn-outline-secondary btn-lg">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </a>
+            </div>
         </form>
-    </section>
+    </div>
+</div>
 @endsection 
